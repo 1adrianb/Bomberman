@@ -41,6 +41,7 @@ public class GfxObject {
 		int xPoz = (int) (x* blockSize);
 		int yPoz = (int) (y*blockSize);
 		
-		canvas.drawRect(xPoz,yPoz,xPoz+blockSize,yPoz+blockSize, paint);
+		canvas.drawBitmap(bitmap, xPoz, yPoz, paint);
+		//canvas.drawRect(xPoz,yPoz,xPoz+blockSize,yPoz+blockSize, paint);
 	}
 }

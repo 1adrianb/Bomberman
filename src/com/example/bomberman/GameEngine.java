@@ -1,6 +1,5 @@
 package com.example.bomberman;
 
-import android.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -27,19 +26,11 @@ public class GameEngine  {
 
 		//setSurfaceDimensions(240,160);
 		this.context = context;
-		   resources = context.getResources();
+		resources = context.getResources();
 		
 		blackPaint = new Paint();
 		blackPaint.setColor(Color.BLACK);
 		blackPaint.setStyle(Style.FILL);
-		
-		invincibleWallPaint = new Paint();
-		invincibleWallPaint.setColor(Color.RED);
-		invincibleWallPaint.setStyle(Style.STROKE);
-		
-		roadPaint = new Paint();
-		roadPaint.setColor(Color.BLUE);
-		roadPaint.setStyle(Style.STROKE);
 
 		textPaint = new Paint();
 		textPaint.setColor(Color.LTGRAY);
@@ -85,9 +76,11 @@ public class GameEngine  {
 		
 		sizeOfBlock =  (int) (screenWidth/13); 
 		if(bitmapInvincibleWall==null)
-		bitmapInvincibleWall = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.invincible_wall),sizeOfBlock,sizeOfBlock,true);
-		if(bitmapRoad==null)
+			bitmapInvincibleWall = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.invincible_wall),sizeOfBlock,sizeOfBlock,true);
+		if(bitmapRoad==null){
 			bitmapRoad = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.road),sizeOfBlock,sizeOfBlock,true);
+			bomberman.resetSize(resources,sizeOfBlock);
+		}
 		int ni =  (int) (screenWidth/sizeOfBlock);
 		int nj = (int) (screenHight/sizeOfBlock);
 		for(int i=0;i<ni;i++){
