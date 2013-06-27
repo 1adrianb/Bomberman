@@ -1,6 +1,7 @@
 package com.example.bomberman;
 
 import android.content.Context;
+import android.util.Log;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -65,8 +66,35 @@ public class GameSurface  extends SurfaceView implements SurfaceHolder.Callback{
 	@Override
 	public boolean onTouchEvent(MotionEvent motionEvent){
 		final int action = motionEvent.getAction();
-		
-		
+		int xEvent=(int)motionEvent.getX();
+		int yEvent=(int)motionEvent.getY();
+		if(isInside(xEvent,yEvent, 2*gameEngine.getButtonSize()-50, gameEngine.getButtonSize()-20)){
+			//Log.e("My activity", "Up");
+			gameEngine.bomberman.direction=0;
+			//move up
+		}
+		if(isInside(xEvent,yEvent,0, gameEngine.getButtonSize()-20)){
+			//Log.e("My activity", "Down");
+			gameEngine.bomberman.direction=1;
+			//move down
+		}
+		if(isInside(xEvent,yEvent,gameEngine.getButtonSize()-30, 10)){
+			//Log.e("My activity", "Left");
+			gameEngine.bomberman.direction=2;
+			//move Left
+		}
+		if(isInside(xEvent,yEvent,gameEngine.getButtonSize()-30,2*gameEngine.getButtonSize()-45)){
+			//Log.e("My activity", "Right");
+			gameEngine.bomberman.direction=3;
+			//move Right
+		}
 		return false;	
+	}
+	
+	public boolean isInside(int xEvent, int yEvent,int xBitmap, int yBitmap){
+		if (xEvent >= xBitmap && xEvent < (xBitmap + gameEngine.getButtonSize())
+                && yEvent >= yBitmap && yEvent < (yBitmap + gameEngine.getButtonSize()))
+			return true;
+		else return false;
 	}
 }

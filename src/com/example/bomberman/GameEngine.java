@@ -14,13 +14,16 @@ public class GameEngine  {
 	public float screenWidth;
 	public float screenHight;
 	private Paint blackPaint;
-	private Paint textPaint, invincibleWallPaint, roadPaint;
+	private Paint textPaint, invincibleWallPaint, roadPaint, buttonPaint;
 	private int[][] matrix = new int[13][30];
-	private Bomberman bomberman;
+	public Bomberman bomberman;
 	private Resources resources;
 	private int sizeOfBlock;
+	private int buttonSize;
 	private Bitmap bitmapInvincibleWall=null, bitmapRoad=null;
 	private Context context;
+	
+	private Bitmap up=null,down=null,left=null,right=null;
 	
 	public void Init(Context context){
 
@@ -36,7 +39,14 @@ public class GameEngine  {
 		textPaint.setColor(Color.LTGRAY);
 		textPaint.setTextSize(40);
 		
-		bomberman = new Bomberman(resources, 100, 100);
+		buttonPaint=new Paint();
+		buttonPaint.setAlpha(80);
+		
+		bomberman = new Bomberman(resources, 10, 10);
+		bomberman.setDirection(5);
+		bomberman.setSpeed(0);
+		
+		
 		
 		for(int i=0;i<13;i++){
 			matrix[i][0] = 1;
@@ -50,7 +60,6 @@ public class GameEngine  {
 			matrix[0][i] = 1;
 			matrix[12][i] = 1;
 		}
-
 	}
 	
 	public int[][] getMap(){
@@ -60,6 +69,9 @@ public class GameEngine  {
 	public int getBlockSize(){
 		return sizeOfBlock;
 	}
+	public int getButtonSize(){
+		return buttonSize;
+	}
 	
 	public void setSurfaceDimensions(int width, int height) {
 		screenWidth = width;
@@ -68,18 +80,27 @@ public class GameEngine  {
 	
 	@SuppressLint("SimpleDateFormat")
 	public void Update(){
-		//bomberman.move((int)screenWidth, (int)screenHight);
+		bomberman.move();
+		bomberman.direction=5;
 	}
 	
 	public void Draw(Canvas canvas){
 		canvas.drawRect(0,0,canvas.getWidth(),canvas.getHeight(),blackPaint);
 		
-		sizeOfBlock =  (int) (screenWidth/13); 
+		sizeOfBlock =  (int) (screenWidth/13);
+		buttonSize=2*sizeOfBlock;
 		if(bitmapInvincibleWall==null)
 			bitmapInvincibleWall = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.invincible_wall),sizeOfBlock,sizeOfBlock,true);
 		if(bitmapRoad==null){
 			bitmapRoad = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.road),sizeOfBlock,sizeOfBlock,true);
 			bomberman.resetSize(resources,sizeOfBlock);
+		}
+		
+		if(up==null){
+			up = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.right),buttonSize,buttonSize,true);
+			down = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.left),buttonSize,buttonSize,true);
+			left = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.up),buttonSize,buttonSize,true);
+			right = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.down),buttonSize,buttonSize,true);
 		}
 		int ni =  (int) (screenWidth/sizeOfBlock);
 		int nj = (int) (screenHight/sizeOfBlock);
@@ -95,6 +116,13 @@ public class GameEngine  {
 				}
 			}
 		}
-		bomberman.draw(canvas, 10, 10, sizeOfBlock, textPaint);
+		bomberman.draw(canvas,sizeOfBlock, textPaint);
+		
+		canvas.drawBitmap(up, 2*buttonSize-50, buttonSize-20, buttonPaint);
+		canvas.drawBitmap(down, 0, buttonSize-20, buttonPaint);
+		canvas.drawBitmap(left, buttonSize-30, 10, buttonPaint);
+		canvas.drawBitmap(right, buttonSize-30,2*buttonSize-45, buttonPaint);
+		
+		
 	}
 }
