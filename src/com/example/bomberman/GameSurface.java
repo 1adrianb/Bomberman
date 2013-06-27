@@ -66,6 +66,7 @@ public class GameSurface  extends SurfaceView implements SurfaceHolder.Callback{
 	public boolean onTouchEvent(MotionEvent motionEvent){
 		final int action = motionEvent.getAction();
 		
+		
 		return false;	
 	}
 }
