@@ -23,7 +23,7 @@ public class GameEngine  {
 	private Bitmap bitmapInvincibleWall=null, bitmapRoad=null;
 	private Context context;
 	
-	private Bitmap up=null,down=null,left=null,right=null;
+	private Bitmap up=null,down=null,left=null,right=null,bombButton=null;
 	
 	public void Init(Context context){
 
@@ -101,6 +101,7 @@ public class GameEngine  {
 			down = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.left),buttonSize,buttonSize,true);
 			left = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.up),buttonSize,buttonSize,true);
 			right = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.down),buttonSize,buttonSize,true);
+			bombButton = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources,com.example.bomberman.R.drawable.b),buttonSize,buttonSize,true);
 		}
 		int ni =  (int) (screenWidth/sizeOfBlock);
 		int nj = (int) (screenHight/sizeOfBlock);
@@ -118,11 +119,10 @@ public class GameEngine  {
 		}
 		bomberman.draw(canvas,sizeOfBlock, textPaint);
 		
-		canvas.drawBitmap(up, 2*buttonSize-50, buttonSize-20, buttonPaint);
+		canvas.drawBitmap(up, 2*buttonSize-55, buttonSize-20, buttonPaint);
 		canvas.drawBitmap(down, 0, buttonSize-20, buttonPaint);
-		canvas.drawBitmap(left, buttonSize-30, 10, buttonPaint);
+		canvas.drawBitmap(left, buttonSize-30, 8, buttonPaint);
 		canvas.drawBitmap(right, buttonSize-30,2*buttonSize-45, buttonPaint);
-		
-		
+		canvas.drawBitmap(bombButton, buttonSize-30,screenHight-2*buttonSize-45, buttonPaint);	
 	}
 }
